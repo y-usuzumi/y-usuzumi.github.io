@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Haskell,GHC扩展," />
+
+
+<meta name="description" content="BangPatterns可用版本：GHC所有较新版本 含义允许对模式的匹配求值到弱首范式（WHNF）。 用法举例12345678-- 强制惰性lazyFunc ~() = ()-- 强制严格strictFunc !v = ()-- 将lazyFunc换为strictFunc将报错main = print $ lazyFunc undefined  ViewPatterns可用版本：GHC所有较新版">
+<meta name="keywords" content="Haskell,GHC扩展">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GHC扩展极简说明之二 —— 模式和guard类扩展">
+<meta property="og:url" content="http://blog.ratina.org/2017/01/23/GHC扩展极简说明之二-——-模式和guard类扩展/index.html">
+<meta property="og:site_name" content="Ratina">
+<meta property="og:description" content="BangPatterns可用版本：GHC所有较新版本 含义允许对模式的匹配求值到弱首范式（WHNF）。 用法举例12345678-- 强制惰性lazyFunc ~() = ()-- 强制严格strictFunc !v = ()-- 将lazyFunc换为strictFunc将报错main = print $ lazyFunc undefined  ViewPatterns可用版本：GHC所有较新版">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-01-23T15:39:01.471Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GHC扩展极简说明之二 —— 模式和guard类扩展">
+<meta name="twitter:description" content="BangPatterns可用版本：GHC所有较新版本 含义允许对模式的匹配求值到弱首范式（WHNF）。 用法举例12345678-- 强制惰性lazyFunc ~() = ()-- 强制严格strictFunc !v = ()-- 将lazyFunc换为strictFunc将报错main = print $ lazyFunc undefined  ViewPatterns可用版本：GHC所有较新版">
+
+
+
+
+
+
+  <link rel="canonical" href="http://blog.ratina.org/2017/01/23/GHC扩展极简说明之二-——-模式和guard类扩展/"/>
+
+
+  <title>GHC扩展极简说明之二 —— 模式和guard类扩展 | Ratina</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ratina</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">The fictional world where amazing happens</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.ratina.org/2017/01/23/GHC扩展极简说明之二-——-模式和guard类扩展/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yukio Usuzumi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ratina">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">GHC扩展极简说明之二 —— 模式和guard类扩展</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-23T23:18:38+08:00">2017-01-23</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="BangPatterns"><a href="#BangPatterns" class="headerlink" title="BangPatterns"></a>BangPatterns</h2><p>可用版本：GHC所有较新版本</p>
+<h3 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h3><p>允许对模式的匹配求值到弱首范式（WHNF）。</p>
+<h3 id="用法举例"><a href="#用法举例" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 强制惰性</span></div><div class="line"><span class="title">lazyFunc</span> ~() = ()</div><div class="line"></div><div class="line"><span class="comment">-- 强制严格</span></div><div class="line"><span class="title">strictFunc</span> !v = ()</div><div class="line"></div><div class="line"><span class="comment">-- 将lazyFunc换为strictFunc将报错</span></div><div class="line"><span class="title">main</span> = print $ lazyFunc undefined</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="ViewPatterns"><a href="#ViewPatterns" class="headerlink" title="ViewPatterns"></a>ViewPatterns</h2><p>可用版本：GHC所有较新版本</p>
+<h3 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h3><p>提供形如<code>e -&gt; p</code>的模式语法，将e作用于待匹配参数，将其结果与p作匹配。</p>
+<h3 id="用法举例-1"><a href="#用法举例-1" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">eitherEndIsZero</span> :: [<span class="type">Int</span>] -&gt; <span class="type">Bool</span></div><div class="line"><span class="title">eitherEndIsZero</span> (head -&gt; <span class="number">0</span>) = <span class="type">True</span></div><div class="line"><span class="title">eitherEndIsZero</span> (last -&gt; <span class="number">0</span>) = <span class="type">True</span></div><div class="line"><span class="title">eitherEndIsZero</span>          _  = <span class="type">False</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="PatternGuards"><a href="#PatternGuards" class="headerlink" title="PatternGuards"></a>PatternGuards</h2><p>可用版本：GHC所有较新版本，Haskell2010已包含</p>
+<h3 id="含义-2"><a href="#含义-2" class="headerlink" title="含义"></a>含义</h3><p>提供多个匹配条件（布尔guard或模式guard）的串联。</p>
+<h3 id="用法举例-2"><a href="#用法举例-2" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">x</span> :: <span class="type">Int</span> -&gt; <span class="type">Int</span></div><div class="line"><span class="title">x</span> a | a &gt; <span class="number">5</span></div><div class="line">    , <span class="number">10</span> &lt;- a + <span class="number">3</span> = <span class="number">0</span></div><div class="line">    | otherwise = <span class="number">1</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="PatternSynonyms"><a href="#PatternSynonyms" class="headerlink" title="PatternSynonyms"></a>PatternSynonyms</h2><p>可用版本：GHC &gt;= 7.10</p>
+<h3 id="含义-3"><a href="#含义-3" class="headerlink" title="含义"></a>含义</h3><p>模式别名，提供对模式的抽象。</p>
+<p>分单向和双向两种。单向别名仅用作模式，双向模式可用于表达式。</p>
+<h3 id="用法举例-3"><a href="#用法举例-3" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">pattern</span> <span class="type">P1</span> a b &lt;- (a, _, b)  <span class="comment">-- 单向</span></div><div class="line"><span class="title">pattern</span> <span class="type">P2</span> a b = (a, (b, <span class="number">3</span>))  <span class="comment">-- 双向</span></div><div class="line"><span class="title">pattern</span> <span class="type">P2E</span> a b = (a, _, b)  <span class="comment">-- 双向（非法）</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Haskell/" rel="tag"># Haskell</a>
+          
+            <a href="/tags/GHC扩展/" rel="tag"># GHC扩展</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/22/GHC扩展极简说明之一-——-基本语法扩展/" rel="next" title="GHC扩展极简说明之一 —— 基本语法扩展">
+                <i class="fa fa-chevron-left"></i> GHC扩展极简说明之一 —— 基本语法扩展
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/28/epoll-vs-kqueue/" rel="prev" title="可伸缩的事件多路复用：epoll vs. kqueue">
+                可伸缩的事件多路复用：epoll vs. kqueue <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Yukio Usuzumi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BangPatterns"><span class="nav-number">1.</span> <span class="nav-text">BangPatterns</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#含义"><span class="nav-number">1.1.</span> <span class="nav-text">含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法举例"><span class="nav-number">1.2.</span> <span class="nav-text">用法举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewPatterns"><span class="nav-number">2.</span> <span class="nav-text">ViewPatterns</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#含义-1"><span class="nav-number">2.1.</span> <span class="nav-text">含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法举例-1"><span class="nav-number">2.2.</span> <span class="nav-text">用法举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PatternGuards"><span class="nav-number">3.</span> <span class="nav-text">PatternGuards</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#含义-2"><span class="nav-number">3.1.</span> <span class="nav-text">含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法举例-2"><span class="nav-number">3.2.</span> <span class="nav-text">用法举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PatternSynonyms"><span class="nav-number">4.</span> <span class="nav-text">PatternSynonyms</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#含义-3"><span class="nav-number">4.1.</span> <span class="nav-text">含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法举例-3"><span class="nav-number">4.2.</span> <span class="nav-text">用法举例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yukio Usuzumi</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
