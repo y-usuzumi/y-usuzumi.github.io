@@ -49,19 +49,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
 
 
 
@@ -76,7 +76,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    version: '6.0.2',
+    version: '6.0.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
     fastclick: false,
@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Ratina">
 <meta property="og:description" content="PostfixOperators可用版本：GHC所有较新版本 含义可将运算符用作后缀。 用法举例12345678-- 未打开扩展时(4 !)  -- 等同于 \x -&amp;gt; 4 ! x-- 打开扩展后，!可以为一元运算符(!) :: Integer -&amp;gt; Integer(!) = 省略(4 !) :: Integer  TupleSections可用版本：GHC &amp;gt;= 6.12 含义">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-27T17:49:16.207Z">
+<meta property="og:updated_time" content="2018-02-13T06:34:42.930Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GHC扩展极简说明之一 —— 基本语法扩展">
 <meta name="twitter:description" content="PostfixOperators可用版本：GHC所有较新版本 含义可将运算符用作后缀。 用法举例12345678-- 未打开扩展时(4 !)  -- 等同于 \x -&amp;gt; 4 ! x-- 打开扩展后，!可以为一元运算符(!) :: Integer -&amp;gt; Integer(!) = 省略(4 !) :: Integer  TupleSections可用版本：GHC &amp;gt;= 6.12 含义">
@@ -124,6 +124,12 @@
   <link rel="canonical" href="http://blog.ratina.org/2017/01/22/GHC扩展极简说明之一-——-基本语法扩展/"/>
 
 
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
   <title>GHC扩展极简说明之一 —— 基本语法扩展 | Ratina</title>
   
 
@@ -327,45 +333,45 @@
       
         <h2 id="PostfixOperators"><a href="#PostfixOperators" class="headerlink" title="PostfixOperators"></a>PostfixOperators</h2><p>可用版本：GHC所有较新版本</p>
 <h3 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h3><p>可将运算符用作后缀。</p>
-<h3 id="用法举例"><a href="#用法举例" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 未打开扩展时</span></div><div class="line">(<span class="number">4</span> !)  <span class="comment">-- 等同于 \x -&gt; 4 ! x</span></div><div class="line"></div><div class="line"><span class="comment">-- 打开扩展后，!可以为一元运算符</span></div><div class="line">(!) :: <span class="type">Integer</span> -&gt; <span class="type">Integer</span></div><div class="line">(!) = 省略</div><div class="line"></div><div class="line">(<span class="number">4</span> !) :: <span class="type">Integer</span></div></pre></td></tr></table></figure>
+<h3 id="用法举例"><a href="#用法举例" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 未打开扩展时</span></span><br><span class="line">(<span class="number">4</span> !)  <span class="comment">-- 等同于 \x -&gt; 4 ! x</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 打开扩展后，!可以为一元运算符</span></span><br><span class="line">(!) :: <span class="type">Integer</span> -&gt; <span class="type">Integer</span></span><br><span class="line">(!) = 省略</span><br><span class="line"></span><br><span class="line">(<span class="number">4</span> !) :: <span class="type">Integer</span></span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="TupleSections"><a href="#TupleSections" class="headerlink" title="TupleSections"></a>TupleSections</h2><p>可用版本：GHC &gt;= 6.12</p>
 <h3 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h3><p>可使用部分应用的元组。</p>
-<h3 id="用法举例-1"><a href="#用法举例-1" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="number">1</span>, <span class="string">"Hello"</span>, , , <span class="string">"World"</span>)</div></pre></td></tr></table></figure>
+<h3 id="用法举例-1"><a href="#用法举例-1" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1</span>, <span class="string">"Hello"</span>, , , <span class="string">"World"</span>)</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="PackageImports"><a href="#PackageImports" class="headerlink" title="PackageImports"></a>PackageImports</h2><p>可用版本：GHC所有较新版本</p>
 <h3 id="含义-2"><a href="#含义-2" class="headerlink" title="含义"></a>含义</h3><p>可显式地从指定包中导入模块</p>
-<h3 id="用法举例-2"><a href="#用法举例-2" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> "package-one" Data.Module.X</div><div class="line"><span class="keyword">import</span> "package-two-0.1.0.1" Data.Module.X</div></pre></td></tr></table></figure>
+<h3 id="用法举例-2"><a href="#用法举例-2" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> "package-one" Data.Module.X</span><br><span class="line"><span class="keyword">import</span> "package-two-0.1.0.1" Data.Module.X</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="OverloadedStrings"><a href="#OverloadedStrings" class="headerlink" title="OverloadedStrings"></a>OverloadedStrings</h2><p>可用版本：GHC所有较新版本</p>
 <h3 id="含义-3"><a href="#含义-3" class="headerlink" title="含义"></a>含义</h3><p>可将字面字符串转变为多态类型。</p>
-<h3 id="用法举例-3"><a href="#用法举例-3" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 未开启OverloadedStrings时</span></div><div class="line">:t <span class="string">"Hello"</span></div><div class="line"><span class="string">"Hello"</span> :: [<span class="type">Char</span>]</div><div class="line"></div><div class="line"><span class="comment">-- 开启OverloadedStrings后</span></div><div class="line">:t <span class="string">"Hello"</span></div><div class="line"><span class="string">"Hello"</span> :: <span class="type">Data</span>.<span class="type">String</span>.<span class="type">IsString</span> t =&gt; t</div><div class="line"><span class="comment">-- 于是可以</span></div><div class="line"><span class="title">a</span> :: <span class="type">Text</span></div><div class="line"><span class="title">a</span> = <span class="string">"World"</span></div></pre></td></tr></table></figure>
+<h3 id="用法举例-3"><a href="#用法举例-3" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 未开启OverloadedStrings时</span></span><br><span class="line">:t <span class="string">"Hello"</span></span><br><span class="line"><span class="string">"Hello"</span> :: [<span class="type">Char</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 开启OverloadedStrings后</span></span><br><span class="line">:t <span class="string">"Hello"</span></span><br><span class="line"><span class="string">"Hello"</span> :: <span class="type">Data</span>.<span class="type">String</span>.<span class="type">IsString</span> t =&gt; t</span><br><span class="line"><span class="comment">-- 于是可以</span></span><br><span class="line"><span class="title">a</span> :: <span class="type">Text</span></span><br><span class="line"><span class="title">a</span> = <span class="string">"World"</span></span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="UnicodeSyntax"><a href="#UnicodeSyntax" class="headerlink" title="UnicodeSyntax"></a>UnicodeSyntax</h2><p>可用版本：GHC所有较新版本</p>
 <h3 id="含义-4"><a href="#含义-4" class="headerlink" title="含义"></a>含义</h3><p>可使用诸多Unicode符号替代标准运算符</p>
-<h3 id="用法举例-4"><a href="#用法举例-4" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&#123;-# LANGUAGE UnicodeSyntax #-&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> Data.List.Unicode ((∪))</div><div class="line"></div><div class="line"><span class="title">print</span> $ [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] ∪ [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</div></pre></td></tr></table></figure>
+<h3 id="用法举例-4"><a href="#用法举例-4" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#123;-# LANGUAGE UnicodeSyntax #-&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Data.List.Unicode ((∪))</span><br><span class="line"></span><br><span class="line"><span class="title">print</span> $ [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] ∪ [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="RecursiveDo"><a href="#RecursiveDo" class="headerlink" title="RecursiveDo"></a>RecursiveDo</h2><p>可用版本：GHC所有较新版本</p>
 <h3 id="含义-5"><a href="#含义-5" class="headerlink" title="含义"></a>含义</h3><p>启用monad上下文递归。</p>
 <p>一般情况下，monad不允许递归，比如</p>
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">do</span> x &lt;- return $ fst y</div><div class="line">   y &lt;- return $ (<span class="number">3</span>, x)</div><div class="line">   return $ snd y</div></pre></td></tr></table></figure>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">do</span> x &lt;- return $ fst y</span><br><span class="line">   y &lt;- return $ (<span class="number">3</span>, x)</span><br><span class="line">   return $ snd y</span><br></pre></td></tr></table></figure>
 <p>报“y不在作用域中”的错误。</p>
 <p>使用<code>Control.Monad.Fix</code>中的mfix可以解决这一问题：</p>
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">do</span> y &lt;- mfix $ \ y0 -&gt; <span class="keyword">do</span> x  &lt;- return $ fst y0</div><div class="line">                          y1 &lt;- return $ (<span class="number">3</span>, x)</div><div class="line">                          return $ y1</div><div class="line">   return $ snd y</div></pre></td></tr></table></figure>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">do</span> y &lt;- mfix $ \ y0 -&gt; <span class="keyword">do</span> x  &lt;- return $ fst y0</span><br><span class="line">                          y1 &lt;- return $ (<span class="number">3</span>, x)</span><br><span class="line">                          return $ y1</span><br><span class="line">   return $ snd y</span><br></pre></td></tr></table></figure>
 <p>开启<code>RecursiveDo</code>之后，可使用下面两种形式：</p>
-<h3 id="用法举例-5"><a href="#用法举例-5" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="title">mdo</span> x &lt;- return $ fst y</div><div class="line">    y &lt;- return $ (<span class="number">3</span>, x)</div><div class="line">    return $ snd y</div><div class="line">    </div><div class="line"><span class="comment">-- 或者</span></div><div class="line"></div><div class="line"><span class="title">do</span> <span class="keyword">rec</span> x &lt;- return $ fst y</div><div class="line">       y &lt;- return $ (<span class="number">3</span>, x)</div><div class="line">       return $ snd y</div></pre></td></tr></table></figure>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p><code>mdo</code>和<code>rec</code>略有不同之处：涉及GHC中的优化策略“segmentation”。<code>mdo</code>会进行<br>“segmentation”操作，而<code>rec</code>不会。详情<a href="https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/guide-to-ghc-extensions/basic-syntax-extensions#recursivedo-and-dorec" target="_blank" rel="external">点击此处</a></p>
+<h3 id="用法举例-5"><a href="#用法举例-5" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">mdo</span> x &lt;- return $ fst y</span><br><span class="line">    y &lt;- return $ (<span class="number">3</span>, x)</span><br><span class="line">    return $ snd y</span><br><span class="line">    </span><br><span class="line"><span class="comment">-- 或者</span></span><br><span class="line"></span><br><span class="line"><span class="title">do</span> <span class="keyword">rec</span> x &lt;- return $ fst y</span><br><span class="line">       y &lt;- return $ (<span class="number">3</span>, x)</span><br><span class="line">       return $ snd y</span><br></pre></td></tr></table></figure>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p><code>mdo</code>和<code>rec</code>略有不同之处：涉及GHC中的优化策略“segmentation”。<code>mdo</code>会进行<br>“segmentation”操作，而<code>rec</code>不会。详情<a href="https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/guide-to-ghc-extensions/basic-syntax-extensions#recursivedo-and-dorec" target="_blank" rel="noopener">点击此处</a></p>
 <hr>
 <h2 id="LambdaCase"><a href="#LambdaCase" class="headerlink" title="LambdaCase"></a>LambdaCase</h2><p>可用版本：GHC &gt;= 7.6</p>
 <h3 id="含义-6"><a href="#含义-6" class="headerlink" title="含义"></a>含义</h3><p>将形如<code>\x -&gt; case x of ...</code>的代码简化为<code>\case ...</code>。</p>
-<h3 id="用法举例-6"><a href="#用法举例-6" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">forM_</span> [<span class="type">Just</span> <span class="number">1</span>, <span class="type">Just</span> <span class="number">2</span>, <span class="type">Nothing</span>] $ \<span class="keyword">case</span></div><div class="line">  <span class="type">Just</span> v  -&gt; ...</div><div class="line">  <span class="type">Nothing</span> -&gt; ...</div></pre></td></tr></table></figure>
+<h3 id="用法举例-6"><a href="#用法举例-6" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">forM_</span> [<span class="type">Just</span> <span class="number">1</span>, <span class="type">Just</span> <span class="number">2</span>, <span class="type">Nothing</span>] $ \<span class="keyword">case</span></span><br><span class="line">  <span class="type">Just</span> v  -&gt; ...</span><br><span class="line">  <span class="type">Nothing</span> -&gt; ...</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="EmptyCase"><a href="#EmptyCase" class="headerlink" title="EmptyCase"></a>EmptyCase</h2><p>可用版本：GHC &gt;= 7.8</p>
 <h3 id="含义-7"><a href="#含义-7" class="headerlink" title="含义"></a>含义</h3><p>允许形如<code>\x -&gt; case x of {}</code>或<code>\case {}</code>的代码。<br>与使用<code>error</code>或<code>undefined</code>不同之处在于，将来可以得到“条件完整度检查”的支持。</p>
 <hr>
 <h2 id="MultiwayIf"><a href="#MultiwayIf" class="headerlink" title="MultiwayIf"></a>MultiwayIf</h2><p>可用版本：GHC &gt;= 7.6</p>
 <h3 id="含义-8"><a href="#含义-8" class="headerlink" title="含义"></a>含义</h3><p>允许多条件<code>if</code>表达式。</p>
-<h3 id="用法举例-7"><a href="#用法举例-7" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">fn</span> :: <span class="type">Int</span> -&gt; <span class="type">Int</span> -&gt; <span class="type">String</span></div><div class="line"><span class="title">fn</span> x y = <span class="keyword">if</span> | x == <span class="number">1</span>    -&gt; <span class="string">"a"</span></div><div class="line">            | y &lt;  <span class="number">2</span>    -&gt; <span class="string">"b"</span></div><div class="line">            | otherwise -&gt; <span class="string">"c"</span></div></pre></td></tr></table></figure>
+<h3 id="用法举例-7"><a href="#用法举例-7" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">fn</span> :: <span class="type">Int</span> -&gt; <span class="type">Int</span> -&gt; <span class="type">String</span></span><br><span class="line"><span class="title">fn</span> x y = <span class="keyword">if</span> | x == <span class="number">1</span>    -&gt; <span class="string">"a"</span></span><br><span class="line">            | y &lt;  <span class="number">2</span>    -&gt; <span class="string">"b"</span></span><br><span class="line">            | otherwise -&gt; <span class="string">"c"</span></span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="BinaryLiterals"><a href="#BinaryLiterals" class="headerlink" title="BinaryLiterals"></a>BinaryLiterals</h2><p>可用版本：GHC &gt;= 7.10</p>
 <h3 id="含义-9"><a href="#含义-9" class="headerlink" title="含义"></a>含义</h3><p>允许二进制字面值（形如<code>0b10110</code>或<code>0B10110</code>）</p>
@@ -383,11 +389,14 @@
 <h3 id="备注-1"><a href="#备注-1" class="headerlink" title="备注"></a>备注</h3><p><code>ghc -make</code>默认会启用此扩展，而cabal不会。</p>
 <hr>
 <h2 id="NondecreasingIndentation"><a href="#NondecreasingIndentation" class="headerlink" title="NondecreasingIndentation"></a>NondecreasingIndentation</h2><p>可用版本：GHC &gt;= 7.2</p>
-<p>参见<a href="https://prime.haskell.org/wiki/NondecreasingIndentation" target="_blank" rel="external">此处</a></p>
+<p>参见<a href="https://prime.haskell.org/wiki/NondecreasingIndentation" target="_blank" rel="noopener">此处</a></p>
 <p>没个卵用。</p>
 
       
     </div>
+
+    
+
     
     
     
@@ -608,12 +617,13 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
 
 
 
 
         
+
 
 
 
@@ -688,25 +698,25 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
 
 
 
   
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
 
 
 

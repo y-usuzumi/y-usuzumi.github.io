@@ -49,19 +49,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
 
 
 
@@ -76,7 +76,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    version: '6.0.2',
+    version: '6.0.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
     fastclick: false,
@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Ratina">
 <meta property="og:description" content="BangPatterns可用版本：GHC所有较新版本 含义允许对模式的匹配求值到弱首范式（WHNF）。 用法举例12345678-- 强制惰性lazyFunc ~() = ()-- 强制严格strictFunc !v = ()-- 将lazyFunc换为strictFunc将报错main = print $ lazyFunc undefined  ViewPatterns可用版本：GHC所有较新版">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-01-23T15:39:01.471Z">
+<meta property="og:updated_time" content="2018-02-13T06:34:42.930Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GHC扩展极简说明之二 —— 模式和guard类扩展">
 <meta name="twitter:description" content="BangPatterns可用版本：GHC所有较新版本 含义允许对模式的匹配求值到弱首范式（WHNF）。 用法举例12345678-- 强制惰性lazyFunc ~() = ()-- 强制严格strictFunc !v = ()-- 将lazyFunc换为strictFunc将报错main = print $ lazyFunc undefined  ViewPatterns可用版本：GHC所有较新版">
@@ -124,6 +124,12 @@
   <link rel="canonical" href="http://blog.ratina.org/2017/01/23/GHC扩展极简说明之二-——-模式和guard类扩展/"/>
 
 
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
   <title>GHC扩展极简说明之二 —— 模式和guard类扩展 | Ratina</title>
   
 
@@ -327,23 +333,26 @@
       
         <h2 id="BangPatterns"><a href="#BangPatterns" class="headerlink" title="BangPatterns"></a>BangPatterns</h2><p>可用版本：GHC所有较新版本</p>
 <h3 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h3><p>允许对模式的匹配求值到弱首范式（WHNF）。</p>
-<h3 id="用法举例"><a href="#用法举例" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 强制惰性</span></div><div class="line"><span class="title">lazyFunc</span> ~() = ()</div><div class="line"></div><div class="line"><span class="comment">-- 强制严格</span></div><div class="line"><span class="title">strictFunc</span> !v = ()</div><div class="line"></div><div class="line"><span class="comment">-- 将lazyFunc换为strictFunc将报错</span></div><div class="line"><span class="title">main</span> = print $ lazyFunc undefined</div></pre></td></tr></table></figure>
+<h3 id="用法举例"><a href="#用法举例" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 强制惰性</span></span><br><span class="line"><span class="title">lazyFunc</span> ~() = ()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 强制严格</span></span><br><span class="line"><span class="title">strictFunc</span> !v = ()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 将lazyFunc换为strictFunc将报错</span></span><br><span class="line"><span class="title">main</span> = print $ lazyFunc undefined</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="ViewPatterns"><a href="#ViewPatterns" class="headerlink" title="ViewPatterns"></a>ViewPatterns</h2><p>可用版本：GHC所有较新版本</p>
 <h3 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h3><p>提供形如<code>e -&gt; p</code>的模式语法，将e作用于待匹配参数，将其结果与p作匹配。</p>
-<h3 id="用法举例-1"><a href="#用法举例-1" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">eitherEndIsZero</span> :: [<span class="type">Int</span>] -&gt; <span class="type">Bool</span></div><div class="line"><span class="title">eitherEndIsZero</span> (head -&gt; <span class="number">0</span>) = <span class="type">True</span></div><div class="line"><span class="title">eitherEndIsZero</span> (last -&gt; <span class="number">0</span>) = <span class="type">True</span></div><div class="line"><span class="title">eitherEndIsZero</span>          _  = <span class="type">False</span></div></pre></td></tr></table></figure>
+<h3 id="用法举例-1"><a href="#用法举例-1" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">eitherEndIsZero</span> :: [<span class="type">Int</span>] -&gt; <span class="type">Bool</span></span><br><span class="line"><span class="title">eitherEndIsZero</span> (head -&gt; <span class="number">0</span>) = <span class="type">True</span></span><br><span class="line"><span class="title">eitherEndIsZero</span> (last -&gt; <span class="number">0</span>) = <span class="type">True</span></span><br><span class="line"><span class="title">eitherEndIsZero</span>          _  = <span class="type">False</span></span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="PatternGuards"><a href="#PatternGuards" class="headerlink" title="PatternGuards"></a>PatternGuards</h2><p>可用版本：GHC所有较新版本，Haskell2010已包含</p>
 <h3 id="含义-2"><a href="#含义-2" class="headerlink" title="含义"></a>含义</h3><p>提供多个匹配条件（布尔guard或模式guard）的串联。</p>
-<h3 id="用法举例-2"><a href="#用法举例-2" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">x</span> :: <span class="type">Int</span> -&gt; <span class="type">Int</span></div><div class="line"><span class="title">x</span> a | a &gt; <span class="number">5</span></div><div class="line">    , <span class="number">10</span> &lt;- a + <span class="number">3</span> = <span class="number">0</span></div><div class="line">    | otherwise = <span class="number">1</span></div></pre></td></tr></table></figure>
+<h3 id="用法举例-2"><a href="#用法举例-2" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">x</span> :: <span class="type">Int</span> -&gt; <span class="type">Int</span></span><br><span class="line"><span class="title">x</span> a | a &gt; <span class="number">5</span></span><br><span class="line">    , <span class="number">10</span> &lt;- a + <span class="number">3</span> = <span class="number">0</span></span><br><span class="line">    | otherwise = <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="PatternSynonyms"><a href="#PatternSynonyms" class="headerlink" title="PatternSynonyms"></a>PatternSynonyms</h2><p>可用版本：GHC &gt;= 7.10</p>
 <h3 id="含义-3"><a href="#含义-3" class="headerlink" title="含义"></a>含义</h3><p>模式别名，提供对模式的抽象。</p>
 <p>分单向和双向两种。单向别名仅用作模式，双向模式可用于表达式。</p>
-<h3 id="用法举例-3"><a href="#用法举例-3" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">pattern</span> <span class="type">P1</span> a b &lt;- (a, _, b)  <span class="comment">-- 单向</span></div><div class="line"><span class="title">pattern</span> <span class="type">P2</span> a b = (a, (b, <span class="number">3</span>))  <span class="comment">-- 双向</span></div><div class="line"><span class="title">pattern</span> <span class="type">P2E</span> a b = (a, _, b)  <span class="comment">-- 双向（非法）</span></div></pre></td></tr></table></figure>
+<h3 id="用法举例-3"><a href="#用法举例-3" class="headerlink" title="用法举例"></a>用法举例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">pattern</span> <span class="type">P1</span> a b &lt;- (a, _, b)  <span class="comment">-- 单向</span></span><br><span class="line"><span class="title">pattern</span> <span class="type">P2</span> a b = (a, (b, <span class="number">3</span>))  <span class="comment">-- 双向</span></span><br><span class="line"><span class="title">pattern</span> <span class="type">P2E</span> a b = (a, _, b)  <span class="comment">-- 双向（非法）</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
+
+    
+
     
     
     
@@ -564,12 +573,13 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
 
 
 
 
         
+
 
 
 
@@ -644,25 +654,25 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
 
 
 
   
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
 
 
 
